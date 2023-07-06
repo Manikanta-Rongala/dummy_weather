@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 
 import 'Weather_api_repo.dart';
-import 'forecastWeather.dart';
+
 import 'models/weather_model.dart';
 
 
@@ -23,7 +23,7 @@ import 'models/weather_model.dart';
 
 
 void main() {
-  runApp( const WeatherForecast());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -78,11 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     FutureBuilder<WeatherModel>(
       future: getData(),
-      builder: (context, AsyncSnapshot<WeatherModel> weatherNew) {
-        if (weatherNew.hasData) {
-            Text(weatherNew.data!.city!.name.toString());
-        } else if (weatherNew.hasError) {
-          return Center(child: Text(weatherNew.error.toString()));
+      builder: (context, AsyncSnapshot<WeatherModel> weatherData) {
+        if (weatherData.hasData) {
+            Text(weatherData.data!.city!.name.toString());
+        } else if (weatherData.hasError) {
+          return Center(child: Text(weatherData.error.toString()));
         }
         // By default show a loading spinner.
         return const CircularProgressIndicator();
