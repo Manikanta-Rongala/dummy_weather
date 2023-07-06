@@ -11,17 +11,6 @@ import 'Weather_api_repo.dart';
 import 'models/weather_model.dart';
 
 
-
-
-
-// void main() {
-//   runApp(const MaterialApp(
-//     home: WeatherForecast(),
-//   ));
-// }
-
-
-
 void main() {
   runApp( const MyApp());
 }
@@ -65,22 +54,30 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+
   }
 
-  Future<WeatherModel> getData() async{
-     return weather = await weatherData.getUserData();
-
+  Future< WeatherModel> getData() async{
+     return weather = await weatherData.getForecast();
   }
 
   @override
   Widget build(BuildContext context) {
-     return
-
-    FutureBuilder<WeatherModel>(
-      future: getData(),
+     return FutureBuilder<WeatherModel>(
+      future: weatherData.getForecast(),
       builder: (context, AsyncSnapshot<WeatherModel> weatherData) {
         if (weatherData.hasData) {
-            Text(weatherData.data!.city!.name.toString());
+          return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                 // Text(weatherData.data!.main!.temp.toString()),
+       Text(weatherData.data!.list![0].dt.toString()),
+        Text("${weatherData.data!.cod}")
+
+                ],
+              ),
+            );
         } else if (weatherData.hasError) {
           return Center(child: Text(weatherData.error.toString()));
         }
@@ -94,5 +91,14 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-
+// return ListView.builder(
+//   itemCount: weatherData.data!.length,
+//   itemBuilder: (context, index) {
+//     //final weatherData = weatherData[index];
+//     return ListTile(
+//       title: Text(weatherData.data![index].dt.toString()),
+//      // subtitle: Text(weatherData.dat),
+//     );
+//   },
+// );
 
